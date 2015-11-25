@@ -1,0 +1,516 @@
+<!--
+
+    ﻿Copyright Ministère des Affaires étrangères et du Développement international , 22 avril 2015
+    https://adullact.net/projects/hornet/
+
+
+    Ce logiciel est un programme informatique servant à faciliter la création
+     d'applications Web accessibles conforémement au RGAA et performantes.
+
+    Ce logiciel est régi par la licence CeCILL v2.1 soumise au droit français et
+    respectant les principes de diffusion des logiciels libres. Vous pouvez
+    utiliser, modifier et/ou redistribuer ce programme sous les conditions
+    de la licence CeCILL telle que diffusée par le CEA, le CNRS et l'INRIA
+    sur le site "http://www.cecill.info".
+
+    En contrepartie de l'accessibilité au code source et des droits de copie,
+    de modification et de redistribution accordés par cette licence, il n'est
+    offert aux utilisateurs qu'une garantie limitée.  Pour les mêmes raisons,
+    seule une responsabilité restreinte pèse sur l'auteur du programme,  le
+    titulaire des droits patrimoniaux et les concédants successifs.
+
+    A cet égard  l'attention de l'utilisateur est attirée sur les risques
+    associés au chargement,  à l'utilisation,  à la modification et/ou au
+    développement et à la reproduction du logiciel par l'utilisateur étant
+    donné sa spécificité de logiciel libre, qui peut le rendre complexe à
+    manipuler et qui le réserve donc à des développeurs et des professionnels
+    avertis possédant  des  connaissances  informatiques approfondies.  Les
+    utilisateurs sont donc invités à charger  et  tester  l'adéquation  du
+    logiciel à leurs besoins dans des conditions permettant d'assurer la
+    sécurité de leurs systèmes et ou de leurs données et, plus généralement,
+    à l'utiliser et l'exploiter dans les mêmes conditions de sécurité.
+
+    Le fait que vous puissiez accéder à cet en-tête signifie que vous avez
+    pris connaissance de la licence CeCILL, et que vous en avez accepté les
+    termes.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Basics -->
+	<groupId>fr.gouv.diplomatie.hornet</groupId>
+	<artifactId>hornet-service-parent</artifactId>
+
+	<!-- NOTE : penser à mettre la dépendance du BOM à jour : hornet-service-bom -->
+	<version>5.0.0</version>
+	<packaging>pom</packaging>
+
+	<inceptionYear>2015</inceptionYear>
+	<organization>
+		<name>MAE - Ministère des Affaires étrangères</name>
+		<url />
+	</organization>
+
+	<!-- Properties -->
+	<properties>
+		<!-- Cette prop apparait dans le pied de page de la Javadoc -->
+		<!-- Pour les autres environnements que dev, elle doit être écrasée en 
+			ligne de commande, par exemple : -->
+		<!-- "mvn ... -Denvironnement=dev" -->
+		<environnement>integration</environnement>
+
+		<compilerVersion>1.8</compilerVersion>
+		<compileSource>1.8</compileSource>
+		<compileTarget>1.8</compileTarget>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<project.javadoc.dir>${project.build.directory}/site/apidocs</project.javadoc.dir>
+
+		<project.licence>http://www.cecill.info/licences/Licence_CeCILL_V2-fr.txt</project.licence>
+		<project.description>Librairie du Socle Framework hornet-service.</project.description>
+		<project.symbolicname>hornet.framework</project.symbolicname>
+		<project.downloadurl>https://adullact.net/projects/hornet/</project.downloadurl>
+		<project.docurl>https://adullact.net/docman/?group_id=761</project.docurl>
+		<project.specification.title>Librairie du Socle Framework hornetserver.</project.specification.title>
+		<project.implementation.title>Librairie du Socle Framework hornetserver.</project.implementation.title>
+		<project.implementation.vendor>GOP/GFI</project.implementation.vendor>
+
+		<!-- Plugins -->
+		<maven-compiler-plugin.version>3.2</maven-compiler-plugin.version>
+		<maven-source-plugin.version>2.4</maven-source-plugin.version>
+		<maven-jar-plugin.version>2.5</maven-jar-plugin.version>
+		<maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
+		<maven-surefire-report-plugin.version>2.18.1</maven-surefire-report-plugin.version>
+		<maven-javadoc-plugin.version>2.10.1</maven-javadoc-plugin.version>
+		<maven-site-plugin.version>3.4</maven-site-plugin.version>
+		<maven-replacer-plugin.version>1.5.3</maven-replacer-plugin.version>
+		<properties-maven-plugin.version>1.0-alpha-2</properties-maven-plugin.version>
+		<maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
+		<build-helper-maven-plugin.version>1.9.1</build-helper-maven-plugin.version>
+		<truezip-maven-plugin.version>1.2</truezip-maven-plugin.version>
+		<cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
+		<jasperreports-maven-plugin.version>1.0-beta-2</jasperreports-maven-plugin.version>
+		<maven-resources-plugin.version>2.7</maven-resources-plugin.version>
+		<maven-project-info-reports-plugin.version>2.8</maven-project-info-reports-plugin.version>
+		<maven-assembly-plugin.version>2.5.4</maven-assembly-plugin.version>
+		<jxr-maven-plugin.version>2.0-beta-1</jxr-maven-plugin.version>
+
+		<!-- Bom -->
+		<!-- Node : la version est obligatoirement en dur, ne pas affecter project.version -->
+		<hornet.bom.version>5.0.0</hornet.bom.version>
+	</properties>
+
+	<!-- Dependencies -->
+	<dependencyManagement>
+		<dependencies>
+			<!-- Import du BOM du framework -->
+			<dependency>
+				<groupId>fr.gouv.diplomatie.hornet</groupId>
+				<artifactId>hornet-service-bom</artifactId>
+				<version>${hornet.bom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<dependencies>
+		
+		<!-- Logging -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		
+		<!-- Pour des librairies utilisant encore Log4J -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+		</dependency>
+
+		<!-- Tests -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<!-- Build -->
+	<build>
+		<defaultGoal>install</defaultGoal>
+
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>false</filtering>
+			</testResource>
+		</testResources>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>fr.gouv.diplomatie.hornet</groupId>
+					<artifactId>hornet-service-typescript-maven-plugin</artifactId>
+					<version>5.0.0</version>
+					<executions>
+						<execution>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>generate-typescript</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven-compiler-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>${maven-source-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>${maven-jar-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-report-plugin</artifactId>
+					<version>${maven-surefire-report-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven-surefire-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>${maven-javadoc-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>${maven-site-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>com.google.code.maven-replacer-plugin</groupId>
+					<artifactId>replacer</artifactId>
+					<version>${maven-replacer-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>properties-maven-plugin</artifactId>
+					<version>${properties-maven-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>${maven-dependency-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>truezip-maven-plugin</artifactId>
+					<version>${truezip-maven-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>cobertura-maven-plugin</artifactId>
+					<version>${cobertura-maven-plugin.version}</version>
+					<dependencies>
+						<dependency>
+							<groupId>org.ow2.asm</groupId>
+							<artifactId>asm</artifactId>
+							<version>5.0.3</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>jasperreports-maven-plugin</artifactId>
+                    <version>${jasperreports-maven-plugin.version}</version>
+					<configuration>
+						<outputDirectory>${project.build.directory}/jasper</outputDirectory>
+					</configuration>
+					<executions>
+						<execution>
+							<phase>compile</phase>
+							<goals>
+								<goal>compile-reports</goal>
+							</goals>
+						</execution>
+					</executions>
+					<dependencies>
+						<!--note this must be repeated here to pick up correct xml validation -->
+						<dependency>
+							<groupId>net.sf.jasperreports</groupId>
+							<artifactId>jasperreports</artifactId>
+							<!--  <version>3.7.4</version> -->
+							<version>6.1.0</version>
+							<exclusions>
+								<exclusion>
+					            	<groupId>org.olap4j</groupId>
+					            	<artifactId>olap4j</artifactId>
+								</exclusion>
+							</exclusions>
+						</dependency>
+						<!-- Dépendances Spring nécessaires pour charger les 'fonts' qui sont 
+							au format XML Spring -->
+						<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-beans</artifactId>
+							<version>4.1.4.RELEASE</version>
+						</dependency>
+						<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-core</artifactId>
+							<version>4.1.4.RELEASE</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>${build-helper-maven-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${maven-resources-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-project-info-reports-plugin</artifactId>
+					<version>${maven-project-info-reports-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>${maven-assembly-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>jxr-maven-plugin</artifactId>
+					<version>${jxr-maven-plugin.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<!-- Déclaration JDK 8 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>
+					<verbose>true</verbose>
+					<fork>true</fork>
+					<compilerVersion>${compilerVersion}</compilerVersion>
+					<source>${compileSource}</source>
+					<target>${compileTarget}</target>
+					<compilerArgument>-proc:none</compilerArgument>
+					<!-- Permet de conserver les noms des parametres des méthodes après 
+						compilation -->
+					<!-- Utile notamment pour le plugin maven typescript (évite d'avoir 
+						arg0, arg1..) -->
+					<compilerArgument>-parameters</compilerArgument>
+					<testCompilerArgument>-parameters</testCompilerArgument>
+				</configuration>
+			</plugin>
+
+			<!-- Génération des jars de tests -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+						<manifestEntries>
+							<Specification-Title>${project.specification.title}</Specification-Title>
+							<Implementation-Title>${project.implementation.title}</Implementation-Title>
+							<Implementation-Vendor>${project.implementation.vendor}</Implementation-Vendor>
+							<Integration-Version>${project.version}</Integration-Version>
+							<Bundle-Name>${project.artifactId}</Bundle-Name>
+							<Bundle-Vendor>${project.organization.name}</Bundle-Vendor>
+							<Bundle-Version>${project.version}</Bundle-Version>
+							<Bundle-LastModified>${maven.build.timestamp}</Bundle-LastModified>
+							<Bundle-ManifestVersion>1.0</Bundle-ManifestVersion>
+							<Bundle-License>${project.licence}</Bundle-License>
+							<Bundle-Description>${project.description}</Bundle-Description>
+							<Bundle-SymbolicName>${project.symbolicname}</Bundle-SymbolicName>
+							<Bundle-DownloadURL>${project.downloadurl}</Bundle-DownloadURL>
+							<Bundle-DocURL>${project.docurl}</Bundle-DocURL>
+							<X-Compile-Source-JDK>${compileSource}</X-Compile-Source-JDK>
+							<X-Compile-Target-JDK>${compileTarget}</X-Compile-Target-JDK>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<!-- Génération des jars de sources et sources de tests -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Génération de la Javadoc -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>javadoc-generation</id>
+						<phase>site</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<outputDirectory>${project.build.directory}/site/apidocs</outputDirectory>
+				
+					<maxmemory>512m</maxmemory>
+					<charset>UTF-8</charset>
+					<verbose>false</verbose>
+					<use>true</use>
+					<version>true</version>
+					<author>true</author>
+					<!-- Active la copie du dossier /src/main/javadoc/resources -->
+					<docfilessubdirs>true</docfilessubdirs>
+
+					<doctitle><![CDATA[<h1>${project.name}</h1>]]></doctitle>
+					<header>&lt;i&gt;${project.organization.name}:${project.name}:${project.version}&lt;/i&gt;</header>
+					<footer>&lt;i&gt;${project.organization.name}:${project.name}:${project.version}&lt;/i&gt;</footer>
+					<bottom>&lt;i&gt;Version ${project.version} du
+						${maven.build.timestamp} / Etat :
+						${environnement}&lt;/i&gt;${javadoc.footer}</bottom>
+
+					<doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+					<docletArtifact>
+						<groupId>org.umlgraph</groupId>
+						<artifactId>umlgraph</artifactId>
+						<version>5.6.6</version>
+					</docletArtifact>
+					<additionalparam>-attributes</additionalparam>
+					<additionalparam>-operations</additionalparam>
+					<additionalparam>-qualify</additionalparam>
+					<additionalparam>-types</additionalparam>
+					<additionalparam>-visibility</additionalparam>
+
+					<!-- Désactive doclint pour Java 8 -->
+					<!-- cf http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html -->
+					<additionalparam>-Xdoclint:none</additionalparam>
+
+					<tags>
+						<tag>
+							<name>date</name>
+							<!-- The value X makes javadoc ignoring the tag -->
+							<placement>X</placement>
+						</tag>
+						<tag>
+							<name>memberof</name>
+							<!-- The value X makes javadoc ignoring the tag -->
+							<placement>X</placement>
+						</tag>
+					</tags>
+				</configuration>
+			</plugin>
+			
+			<!-- FIN Génération de la Javadoc -->
+			
+			<!-- Génération des rapports de tests qui seront intégré au site -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<inherited>true</inherited>
+				<executions>
+					<execution>
+						<phase>site</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Génération des rapports de couverture de tests intégrés au site -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<inherited>true</inherited>
+				<configuration>
+					<formats>
+						<format>html</format>
+						<format>xml</format>
+					</formats>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>site</phase>
+						<goals>
+							<goal>cobertura</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>	
+		</plugins>
+	</build>
+</project>

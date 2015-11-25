@@ -1,0 +1,107 @@
+#!/usr/bin/perl
+#
+# Use Net::Telnet to connect to a list of hosts.
+#
+# -p port        connect to 'port' (defaults to 23)
+# -t secs        set timeout to 'secs' (defaults to 10)
+# -l '/regex/'   wait for /regex/, (defaults to "/ogin:/i")
+#
+# Arguments are "host [host...]"
+#
+# Jim Trocki, trockij@arctic.org
+#
+# $Id: telnet.monitor,v 1.2 2005/04/17 07:42:27 trockij Exp $
+#
+#    Copyright (C) 1998, Jim Trocki
+#
+#    This program is free software; you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation; either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+# 29/07/2011
+#	Script adapte pour tester le bon fonctionnement du processus Clamav-daemon
+#	Commande envoyee : PING via Telnet sur le port $PORT.
+# 	Resultat attendu : PONG
+#       /!\ Ne pas modifier les variables comme $PORT directement dans ce script
+#	Modifier la valeur des options lors de l'appel dans le fichier /etc/mon/mon.cf
+#
+# 06/10/2001 CorrectionsSPC :
+# Pour pouvoir avoir des traces dans history.log de mon : ecriture sur STDERR, suppression des sauts de lignes (apparemment mon ne trace que la premiere ligne stderr)
+
+use Net::Telnet;
+use Getopt::Std;
+
+getopts ("l:p:t:");
+
+$TIMEOUT  = $opt_t || 2;
+$PORT     = $opt_p || 3310;
+$LOGIN    = $opt_l || '/^$/i';
+
+@failures = ();
+
+foreach my $host (@ARGV) {
+    my $t = new Net::Telnet (
+    	Timeout => $TIMEOUT,
+	Port => $PORT,
+    );
+
+    if (!defined $t) {
+    	push @failures, [$host, "could not create new Net::Telnet object"];
+	next;
+    }
+
+    $t->errmode ("return");
+
+    if (!defined $t->open ($host)) {
+    	push @failures, [$host, $t->errmsg];
+	next;
+    }
+
+    my $ok = $t->waitfor (
+	    Match => $LOGIN,
+	    Timeout => $TIMEOUT,
+    );
+
+    if (!defined $ok) {
+	push @failures, [$host, "Connection error : ". $t->errmsg];
+    }
+
+    # Envoi de la commande PING
+    $t->print ('PING');
+    my @answer = $t->waitfor (
+	    Match => "/PONG/i",
+	    Timeout => $TIMEOUT,
+    );
+    
+    if (!defined @answer) {
+    push @failures, [$host, "PING command failed: ". $t->errmsg];
+    }
+	   
+    $t->close;
+}
+
+if (@failures == 0) {
+    exit 0;
+}
+
+for (@failures) {
+    push @l, $_->[0];
+}
+
+print STDERR join (" ", sort @l), "--";
+
+for (@failures) {
+    print STDERR "$_->[0]: $_->[1] --";
+}
+
+exit 1;

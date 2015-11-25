@@ -1,0 +1,1 @@
+test de l'antivirus avec un fichier contenant une réponse autre que OK, KO.

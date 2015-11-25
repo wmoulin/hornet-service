@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Basics -->
+	<groupId>fr.gouv.diplomatie.hornet</groupId>
+	<artifactId>hornet-service</artifactId>
+	<version>5.0.0</version>
+	<packaging>pom</packaging>
+
+	<inceptionYear>2015</inceptionYear>
+
+	<organization>
+		<name>MAE - Ministère des Affaires étrangères</name>
+		<url />
+	</organization>
+
+	<properties>
+		<svn.url.trunk>https://forge.diplomatie.gouv.fr/isvn/Hornet.js/hornet-service/trunk</svn.url.trunk>
+	</properties>
+
+	<modules>
+		<module>hornet-service-bom</module>
+		<module>hornet-service-parent</module>
+		<module>hornet-service-javadoc-resources</module>
+		<module>hornet-service-framework</module>
+		<module>hornet-service-typescript-maven-plugin</module>
+	</modules>
+
+	<scm>
+		<connection>scm:svn:${svn.url.trunk}</connection>
+		<developerConnection>scm:svn:${svn.url.trunk}</developerConnection>
+		<url>scm:svn:${svn.url.trunk}</url>
+	</scm>
+
+</project>
