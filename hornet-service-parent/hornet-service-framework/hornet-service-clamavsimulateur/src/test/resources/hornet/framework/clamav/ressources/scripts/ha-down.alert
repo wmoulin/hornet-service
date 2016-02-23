@@ -1,0 +1,3 @@
+# Script qui arrete heartbeat si un probleme survient avec le processus clamd.
+# Cela provoque une bascule du cluster
+sudo /etc/init.d/heartbeat stop

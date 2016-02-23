@@ -1,4 +1,9 @@
-# Hornet Service 5.0.0
+# Hornet-service 5.0.1
+
+- 0055539: [hornet] Jasperreport-plugin (bozecm) - traité.
+- 0054989: [hornet] Déplacement des sources du module "hornet-service-framework" dans "hornet-service-parent" (buganp) - traité.
+
+# Hornet-service 5.0.0
 
 - 51715  -  EXP_INF_IAT  -  En tant que Exploitant je peux installer l'applitutoriel
 - 51716  -  INT_PIC_CAT  -  En tant que Intégrateur je peux construire l'applitutoriel
@@ -134,11 +139,3 @@
 - 52954  -  UTI_APT_NMO  -  En tant que Utilisateur je peux utiliser l'application dans plusieurs onglets
 - 52956  -  UTI_APT_SPI  -  En tant que Utilisateur je peux savoir si un traitement est en cours
 - 52957  -  DEV_APT_UCP  -  En tant que Developpeur je peux Utiliser un context path
-
-
-# Hornet Service 5.0.0-rc1
-- 51827 - Renommer le répertoire svn : hornet-services en hornet-service
-
-# Hornet Service 5.0.0-rc2
-- 53045 - Classe manquante : HornetMediaType
-

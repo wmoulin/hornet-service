@@ -44,7 +44,7 @@
 	<artifactId>hornet-service-parent</artifactId>
 
 	<!-- NOTE : penser à mettre la dépendance du BOM à jour : hornet-service-bom -->
-	<version>5.0.0</version>
+	<version>5.0.1</version>
 	<packaging>pom</packaging>
 
 	<inceptionYear>2015</inceptionYear>
@@ -93,7 +93,7 @@
 		<build-helper-maven-plugin.version>1.9.1</build-helper-maven-plugin.version>
 		<truezip-maven-plugin.version>1.2</truezip-maven-plugin.version>
 		<cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
-		<jasperreports-maven-plugin.version>1.0-beta-2</jasperreports-maven-plugin.version>
+		<jasperreports-maven-plugin.version>2.1</jasperreports-maven-plugin.version>
 		<maven-resources-plugin.version>2.7</maven-resources-plugin.version>
 		<maven-project-info-reports-plugin.version>2.8</maven-project-info-reports-plugin.version>
 		<maven-assembly-plugin.version>2.5.4</maven-assembly-plugin.version>
@@ -101,7 +101,7 @@
 
 		<!-- Bom -->
 		<!-- Node : la version est obligatoirement en dur, ne pas affecter project.version -->
-		<hornet.bom.version>5.0.0</hornet.bom.version>
+		<hornet.bom.version>5.0.1</hornet.bom.version>
 	</properties>
 
 	<!-- Dependencies -->
@@ -179,7 +179,7 @@
 				<plugin>
 					<groupId>fr.gouv.diplomatie.hornet</groupId>
 					<artifactId>hornet-service-typescript-maven-plugin</artifactId>
-					<version>5.0.0</version>
+					<version>${hornet.bom.version}</version>
 					<executions>
 						<execution>
 							<phase>prepare-package</phase>
@@ -258,27 +258,36 @@
 				</plugin>
 				
 				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>jasperreports-maven-plugin</artifactId>
-                    <version>${jasperreports-maven-plugin.version}</version>
-					<configuration>
-						<outputDirectory>${project.build.directory}/jasper</outputDirectory>
-					</configuration>
-					<executions>
-						<execution>
-							<phase>compile</phase>
-							<goals>
-								<goal>compile-reports</goal>
-							</goals>
-						</execution>
-					</executions>
-					<dependencies>
-						<!--note this must be repeated here to pick up correct xml validation -->
+		            <groupId>com.alexnederlof</groupId>
+		            <artifactId>jasperreports-plugin</artifactId>
+		            <version>${jasperreports-maven-plugin.version}</version>
+		            <configuration>
+		                <compiler>net.sf.jasperreports.engine.design.JRJdtCompiler</compiler>
+		                <sourceDirectory>src/main/jasperreports</sourceDirectory>
+		                <outputDirectory>${project.build.directory}/jasper</outputDirectory>
+		                <outputFileExt>.jasper</outputFileExt>
+		                <xmlValidation>true</xmlValidation>
+		                <verbose>false</verbose>
+		                <numberOfThreads>4</numberOfThreads>
+		                <additionalProperties>
+		                	<net.sf.jasperreports.default.pdf.encoding>UTF-8</net.sf.jasperreports.default.pdf.encoding>
+		                </additionalProperties>
+		            </configuration>
+		            <executions>
+		                <execution>
+		                    <phase>compile</phase>
+		                    <goals>
+		                    	<goal>jasper</goal>
+		                    </goals>
+		                </execution>
+		            </executions>
+		            <dependencies>
+		            	<!--note this must be repeated here to pick up correct xml validation -->
 						<dependency>
 							<groupId>net.sf.jasperreports</groupId>
 							<artifactId>jasperreports</artifactId>
 							<!--  <version>3.7.4</version> -->
-							<version>6.1.0</version>
+							<version>6.2.0</version>
 							<exclusions>
 								<exclusion>
 					            	<groupId>org.olap4j</groupId>

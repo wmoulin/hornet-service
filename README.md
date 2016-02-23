@@ -8,7 +8,7 @@ Hornet-service est composé de différents modules :
 - hornet-service-parent : artefact parent pour les modules applicatifs
 - hornet-service-javadoc-resources
 - hornet-service-framework-parent : contient les sous-modules composant le framework Hornet pour la partie services REST
-- hornet-service-typescript-maven-plugin
+- hornet-service-typescript-maven-plugin : génération de fichier d.ts en fonction des controller
 
 ## Modules du framework
 
@@ -60,9 +60,8 @@ La construction du paquet hornet-service à partir des sources se fait avec mave
 mvn package
 ```
 
-
 ## Licence
 
-hornet-service est sous [licence cecill 2.1](./LICENCE.md).
+`hornet-service` est sous [licence cecill 2.1](./LICENSE.md).
 
-Site web : [![http://www.cecill.info](http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html)](http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html)
+Site web : [http://www.cecill.info](http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html)

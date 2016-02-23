@@ -4,7 +4,7 @@
 
 	<groupId>fr.gouv.diplomatie.hornet</groupId>
 	<artifactId>hornet-service-typescript-maven-plugin</artifactId>
-	<version>5.0.0</version>
+	<version>5.0.1</version>
 	<packaging>maven-plugin</packaging>
 
 	<!-- Properties -->
@@ -23,7 +23,7 @@
 		<maven-plugin-annotations.version>3.4</maven-plugin-annotations.version>
 		
 		<!-- Bom -->
-		<hornet.bom.version>5.0.0</hornet.bom.version>
+		<hornet.bom.version>5.0.1</hornet.bom.version>
 		
 	</properties>
 
