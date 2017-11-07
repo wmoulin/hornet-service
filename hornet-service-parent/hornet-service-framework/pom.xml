@@ -42,7 +42,7 @@
 	<parent>
 		<groupId>fr.gouv.diplomatie.hornet</groupId>
 		<artifactId>hornet-service-parent</artifactId>
-		<version>5.0.1</version>
+		<version>5.1.0</version>
 	</parent>
 	
 	<!-- Basics -->
@@ -50,7 +50,7 @@
 	<artifactId>hornet-service-framework-parent</artifactId>
 	
 	<!-- NOTE : penser à mettre la dépendance du BOM à jour : hornet-service-bom -->
-	<version>5.0.1</version>
+	<version>5.1.0</version>
 	<packaging>pom</packaging>
 
 	<inceptionYear>2015</inceptionYear>
@@ -76,7 +76,7 @@
 	<properties>
 	
 		<!-- Bom -->
-		<hornet.bom.version>5.0.1</hornet.bom.version>
+		<hornet.bom.version>5.1.0</hornet.bom.version>
 	</properties>
 
 	<!-- Dependencies -->
@@ -127,6 +127,10 @@
 	
 	<build>
 		<plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+            </plugin>
 		<!-- Génération de la Javadoc -->
 			<!-- # Récupération des resources depuis le module hornet-service-javadoc-resources -->
 			<plugin>

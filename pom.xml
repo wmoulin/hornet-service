@@ -4,14 +4,12 @@
 	<!-- Basics -->
 	<groupId>fr.gouv.diplomatie.hornet</groupId>
 	<artifactId>hornet-service</artifactId>
-	<version>5.0.1</version>
+	<version>5.1.0</version>
 	<packaging>pom</packaging>
 
-	<inceptionYear>2015</inceptionYear>
-
+	<inceptionYear>2016</inceptionYear>
 	<organization>
-		<name>MAE - Ministère des Affaires étrangères</name>
-		<url />
+        <name>MEAE - Ministère de l'Europe et des Affaires étrangères</name>
 	</organization>
 
 	<properties>
@@ -22,7 +20,6 @@
 		<module>hornet-service-bom</module>
 		<module>hornet-service-parent</module>
 		<module>hornet-service-javadoc-resources</module>
-		<module>hornet-service-typescript-maven-plugin</module>
 	</modules>
 
 	<scm>
@@ -31,4 +28,31 @@
 		<url>scm:svn:${svn.url.trunk}</url>
 	</scm>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>1.4.1</version>
+        <executions>
+          <execution>
+            <id>enforce-versions</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireMavenVersion>
+                  <version>[3.2.5,3.4)</version>
+                </requireMavenVersion>
+                <requireJavaVersion>
+                  <version>1.8</version>
+                </requireJavaVersion>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

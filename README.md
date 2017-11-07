@@ -8,7 +8,6 @@ Hornet-service est composé de différents modules :
 - hornet-service-parent : artefact parent pour les modules applicatifs
 - hornet-service-javadoc-resources
 - hornet-service-framework-parent : contient les sous-modules composant le framework Hornet pour la partie services REST
-- hornet-service-typescript-maven-plugin : génération de fichier d.ts en fonction des controller
 
 ## Modules du framework
 

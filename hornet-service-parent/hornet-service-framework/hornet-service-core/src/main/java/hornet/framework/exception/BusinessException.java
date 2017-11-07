@@ -1,23 +1,23 @@
 /**
- * ﻿Copyright Ministère des Affaires étrangères et du Développement international , 22 avril 2015
- * https://adullact.net/projects/hornet/
- *
- *
+ * Copyright ou © ou Copr. Ministère de l'Europe et des Affaires étrangères (2017)
+ * <p/>
+ * pole-architecture.dga-dsi-psi@diplomatie.gouv.fr
+ * <p/>
  * Ce logiciel est un programme informatique servant à faciliter la création
- *  d'applications Web accessibles conforémement au RGAA et performantes.
- *
- * Ce logiciel est régi par la licence CeCILL v2.1 soumise au droit français et
+ * d'applications Web conformément aux référentiels généraux français : RGI, RGS et RGAA
+ * <p/>
+ * Ce logiciel est régi par la licence CeCILL soumise au droit français et
  * respectant les principes de diffusion des logiciels libres. Vous pouvez
  * utiliser, modifier et/ou redistribuer ce programme sous les conditions
  * de la licence CeCILL telle que diffusée par le CEA, le CNRS et l'INRIA
  * sur le site "http://www.cecill.info".
- *
+ * <p/>
  * En contrepartie de l'accessibilité au code source et des droits de copie,
  * de modification et de redistribution accordés par cette licence, il n'est
  * offert aux utilisateurs qu'une garantie limitée.  Pour les mêmes raisons,
  * seule une responsabilité restreinte pèse sur l'auteur du programme,  le
  * titulaire des droits patrimoniaux et les concédants successifs.
- *
+ * <p/>
  * A cet égard  l'attention de l'utilisateur est attirée sur les risques
  * associés au chargement,  à l'utilisation,  à la modification et/ou au
  * développement et à la reproduction du logiciel par l'utilisateur étant
@@ -28,175 +28,107 @@
  * logiciel à leurs besoins dans des conditions permettant d'assurer la
  * sécurité de leurs systèmes et ou de leurs données et, plus généralement,
  * à l'utiliser et l'exploiter dans les mêmes conditions de sécurité.
- *
+ * <p/>
  * Le fait que vous puissiez accéder à cet en-tête signifie que vous avez
  * pris connaissance de la licence CeCILL, et que vous en avez accepté les
  * termes.
+ * <p/>
+ * <p/>
+ * Copyright or © or Copr. Ministry for Europe and Foreign Affairs (2017)
+ * <p/>
+ * pole-architecture.dga-dsi-psi@diplomatie.gouv.fr
+ * <p/>
+ * This software is a computer program whose purpose is to facilitate creation of
+ * web application in accordance with french general repositories : RGI, RGS and RGAA.
+ * <p/>
+ * This software is governed by the CeCILL license under French law and
+ * abiding by the rules of distribution of free software.  You can  use,
+ * modify and/ or redistribute the software under the terms of the CeCILL
+ * license as circulated by CEA, CNRS and INRIA at the following URL
+ * "http://www.cecill.info".
+ * <p/>
+ * As a counterpart to the access to the source code and  rights to copy,
+ * modify and redistribute granted by the license, users are provided only
+ * with a limited warranty  and the software's author,  the holder of the
+ * economic rights,  and the successive licensors  have only  limited
+ * liability.
+ * <p/>
+ * In this respect, the user's attention is drawn to the risks associated
+ * with loading,  using,  modifying and/or developing or reproducing the
+ * software by the user in light of its specific status of free software,
+ * that may mean  that it is complicated to manipulate,  and  that  also
+ * therefore means  that it is reserved for developers  and  experienced
+ * professionals having in-depth computer knowledge. Users are therefore
+ * encouraged to load and test the software's suitability as regards their
+ * requirements in conditions enabling the security of their systems and/or
+ * data to be ensured and,  more generally, to use and operate it in the
+ * same conditions as regards security.
+ * <p/>
+ * The fact that you are presently reading this means that you have had
+ * knowledge of the CeCILL license and that you accept its terms.
+ *
  */
 package hornet.framework.exception;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
 /**
  * Projet Hornet.
  *
- * @author MAEDI
+ * @author MEAE - Ministère de l'Europe et des Affaires étrangères
  *
  */
-@JsonAutoDetect(fieldVisibility=Visibility.NONE, getterVisibility=Visibility.NONE)
-public class BusinessException extends RuntimeException {
+@JsonAutoDetect(fieldVisibility = Visibility.NONE, getterVisibility = Visibility.NONE)
+public class BusinessException extends HornetServiceException {
 
-	/**
-	 * <code>serialVersionUID</code> the serialVersionUID
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * <code>code</code> the l'exception code
-	 */
-	private final String code;
-
-
-	/**
-	 * <code>args</code> the args tableau des arguments
-	 */
-	private final List<String> argsList;
-
-	/**
-	 * BusinessException
-	 *
-	 * @param code
-	 *            code de l'exception
-	 */
-	public BusinessException(final String code) {
-
-		super(code);
-		this.code = code;
-		this.argsList = new ArrayList<String>();
-	}
-
-	/**
-	 * @param code
-	 *            code de l'exception
-	 * @param args
-	 *            tableau des arguments
-	 */
-	public BusinessException(final String code, final String[] args) {
-
-		super();
-		this.code = code;
-		this.argsList = new ArrayList<String>(Arrays.asList(args));
-	}
-
-	/**
-	 * @param code
-	 *            code de l'exception
-	 * @param argsList
-	 *            liste des arguments
-	 */
-	public BusinessException(final String code, final List<String> argsList) {
-
-		super();
-		this.code = code;
-		this.argsList = argsList;
-	}
-
-	/**
-	 * BusinessException
-	 *
-	 * @param code
-	 *            code de l'exception
-	 * @param ex
-	 *            exception
-	 */
-	public BusinessException(final String code, final Throwable ex) {
-
-		super(ex);
-		this.code = code;
-		this.argsList = new ArrayList<String>();
-	}
-
-	/**
-	 * @param code
-	 *            code de l'exception
-	 * @param args
-	 *            tableau des arguments
-	 * @param ex
-	 *            exception
-	 */
-	public BusinessException(final String code, final String[] args,
-			final Throwable ex) {
-
-		super(ex);
-		this.code = code;
-		this.argsList = new ArrayList<String>(Arrays.asList(args));
-	}
-
-	/**
-	 * @param code
-	 *            code de l'exception
-	 * @param argsList
-	 *            liste des arguments
-	 * @param ex
-	 *            exception
-	 */
-	public BusinessException(final String code, final List<String> argsList,
-			final Throwable ex) {
-
-		super(ex);
-		this.code = code;
-		this.argsList = argsList;
-	}
-
-	/**
-	 * Getter of the code
-	 *
-	 * @return Returns the code.
-	 */
-	@JsonProperty
-	public String getCode() {
-
-		return this.code;
-	}
-
-	/**
-	 * Getter of the args
-	 *
-	 * @return Returns the args.
-	 */
-	@JsonProperty
-	public String[] getArgs() {
-
-		return this.argsList.toArray(new String[this.argsList.size()]);
-	}
-
-	/**
-	 * Getter of the argsList
-	 *
-	 * @return Returns the argsList.
-	 */
-	@JsonIgnore
-	public List<String> getArgsList() {
-
-		return this.argsList;
-	}
-    
-    /* (non-Javadoc)
-     * @see java.lang.Throwable#toString()
+    /**
+     * <code>serialVersionUID</code> the serialVersionUID
      */
-    @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(getClass().getName()+" [code=").append(this.code).append(", argsList=[").append(this.argsList).append("]").append(", message=").append(this.getMessage());
-        return builder.append(", stackTrace=[").toString();
+    private static final long serialVersionUID = 1L;
 
+    /**
+     * @param code
+     *            code de l'exception
+     * @param argsList
+     *            liste des arguments
+     */
+    public BusinessException(final String code, final String[] argsList, final Throwable cause) {
+        super(code, argsList, cause);
+        this.setDetailsFromException(this);
+        this.name = this.getClass().getSimpleName();
+        this.type = BusinessException.class.getSimpleName();
     }
-    
+
+    /**
+     * @param code
+     *            code de l'exception
+     * @param argsList
+     *            liste des arguments
+     */
+    public BusinessException(final String code, final String[] argsList) {
+        this(code, argsList, null);
+    }
+
+    /**
+     * BusinessException
+     *
+     * @param code
+     *            code de l'exception
+     * @param cause
+     *            exception
+     */
+    public BusinessException(final String code, final Throwable cause) {
+        this(code, null, cause);
+    }
+
+    /**
+     * BusinessException
+     *
+     * @param code
+     *            code de l'exception
+     */
+    public BusinessException(final String code) {
+        this(code, null, null);
+    }
 }
