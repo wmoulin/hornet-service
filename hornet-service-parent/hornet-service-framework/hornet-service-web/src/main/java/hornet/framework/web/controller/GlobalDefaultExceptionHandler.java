@@ -72,7 +72,7 @@ public class GlobalDefaultExceptionHandler {
     public @ResponseBody BusinessListException defaultBusinessErrorHandler(final HttpServletRequest req, final HttpServletResponse res,
                 final Exception ex) {
 
-        final String url = req.getRequestURL().toString();
+        final String url = req.getRequestURI();
         BusinessListException returnValue = null;
         
 
