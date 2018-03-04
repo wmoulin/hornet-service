@@ -43,7 +43,7 @@ import hornet.framework.web.bo.TechnicalError;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import hornet.framework.exception.TechnicalException;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpStatus;
@@ -51,12 +51,12 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 /**
  * Projet Hornet.
  * 
- * @author MAEDI
- * @since 1.0 - 4 févr. 2015
+ * @author MEAE - Ministère de l'Europe et des Affaires étrangères
  */
 @ControllerAdvice
 public class GlobalDefaultExceptionHandler {
@@ -72,7 +72,7 @@ public class GlobalDefaultExceptionHandler {
     public @ResponseBody BusinessListException defaultBusinessErrorHandler(final HttpServletRequest req, final HttpServletResponse res,
                 final Exception ex) {
 
-        final String url = req.getRequestURL().toString();
+        final String url = req.getRequestURI();
         BusinessListException returnValue = null;
         
 
@@ -99,6 +99,43 @@ public class GlobalDefaultExceptionHandler {
         				+ returnValue.toString());
         return returnValue;
     }
+
+    
+    /**
+     * BusinessException Handler
+     *
+     * @param req
+     *            http request
+     * @param res
+     *            http response
+     * @param ex
+     *            exception
+     * @return List of BusinessException
+     */
+    @ExceptionHandler({
+        NoHandlerFoundException.class})
+    public @ResponseBody TechnicalException defaultNotFoundErrorHandler(final HttpServletRequest req,
+                final HttpServletResponse res, final Exception ex) {
+
+    	final Long numErreur = System.currentTimeMillis();
+    	final String url = req.getRequestURI();
+    	
+        // If the exception is annotated with @ResponseStatus 
+        ResponseStatus rs = AnnotationUtils.findAnnotation(ex.getClass(), ResponseStatus.class);
+        if (rs != null && rs.value() != null) {
+        	res.setStatus(rs.value().value());
+        } else {
+        	res.setStatus(HttpStatus.NOT_FOUND.value());
+        }
+    	
+    	LoggerFactory.getLAogger(this.getClass())
+    	.error(
+    			"Erreur #" + numErreur + " survenue lors de l'appel à l'URL " + url + " : "
+    					+ ex.getMessage(), ex);
+    	
+
+    	return new TechnicalError(ex.getClass().getName(), numErreur.toString(), ex.getMessage(), null);
+    }
     
     /**
      * Exception Handler
@@ -112,7 +149,7 @@ public class GlobalDefaultExceptionHandler {
     		final Exception ex) {
     	
     	final Long numErreur = System.currentTimeMillis();
-    	final String url = req.getRequestURL().toString();
+    	final String url = req.getRequestURI();
     	
         // If the exception is annotated with @ResponseStatus 
         ResponseStatus rs = AnnotationUtils.findAnnotation(ex.getClass(), ResponseStatus.class);
@@ -128,6 +165,6 @@ public class GlobalDefaultExceptionHandler {
     					+ ex.getMessage(), ex);
     	
 
-    	return new TechnicalError(ex.getClass().getName(), numErreur.toString(), ex.getMessage(), ex.getStackTrace());
+    	return new TechnicalError(ex.getClass().getName(), numErreur.toString(), ex.getMessage(), null);
     }
 }
