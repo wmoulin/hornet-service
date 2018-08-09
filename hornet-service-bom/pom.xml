@@ -5,7 +5,7 @@
 	<!-- Basics -->
 	<groupId>fr.gouv.diplomatie.hornet</groupId>
 	<artifactId>hornet-service-bom</artifactId>
-	<version>5.1.0</version>
+	<version>5.2.0</version>
 	<packaging>pom</packaging>
 
 	<inceptionYear>2015</inceptionYear>
@@ -86,6 +86,11 @@
 			</dependency>
 			<dependency>
 				<groupId>fr.gouv.diplomatie.hornet</groupId>
+				<artifactId>hornet-service-data</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.gouv.diplomatie.hornet</groupId>
 				<artifactId>hornet-service-webservicehelper</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -135,9 +140,14 @@
 	            <jsp-api.version>LATEST</jsp-api.version>
 	            <poi.version>LATEST</poi.version>
 	            <servlet-api.version>LATEST</servlet-api.version>
+	            <validation-api.version>LATEST</validation-api.version>
 	            <slf4j.version>LATEST</slf4j.version>
 	            <spring.version>LATEST</spring.version>
 	            <spring.security.version>LATEST</spring.security.version>
+   	            <spring.boot.version>LATEST</spring.boot.version>
+	            <spring.data.version>LATEST</spring.data.version>
+	            <hibernate.jpa.version>LATEST</hibernate.jpa.version>
+	            <hibernate.version>LATEST</hibernate.version>
 	            <velocity.version>LATEST</velocity.version>
 	            <org.mybatis.mybatis.version>LATEST</org.mybatis.mybatis.version>
 	            <org.mybatis.mybatis-spring.version>LATEST</org.mybatis.mybatis-spring.version>
@@ -249,6 +259,11 @@
 			            <artifactId>jsp-api</artifactId>
 			            <version>${jsp-api.version}</version>
 		            </dependency>
+   		            <dependency>
+					    <groupId>javax.validation</groupId>
+					    <artifactId>validation-api</artifactId>
+					    <version>${validation-api.version}</version>
+					</dependency>
 		            <dependency>
 			            <groupId>net.sf.jasperreports</groupId>
 			            <artifactId>jasperreports</artifactId>
@@ -302,6 +317,64 @@
 			            <artifactId>spring-security-config</artifactId>
 			            <version>${spring.security.version}</version>
 			        </dependency>
+   	                
+   	                <dependency>
+			            <groupId>org.springframework.boot</groupId>
+			            <artifactId>spring-boot-dependencies</artifactId>
+			            <version>${spring.boot.version}</version>
+			            <type>pom</type>
+			        </dependency>
+			        <dependency>
+				        <groupId>org.springframework.boot</groupId>
+				        <artifactId>spring-boot-starter-web</artifactId>
+				        <version>${spring.boot.version}</version>
+				    </dependency>
+				    <dependency>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-jdbc</artifactId>
+				        <version>${spring.boot.version}</version>
+					</dependency>
+			        <dependency>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-data-jpa</artifactId>
+				        <version>${spring.boot.version}</version>
+				        <exclusions>
+				        	<exclusion>
+				        		<groupId>org.hibernate</groupId>
+				        		<artifactId>hibernate-core</artifactId>
+				        	</exclusion>
+				        </exclusions>
+					</dependency>
+				    <dependency>
+				        <groupId>org.springframework.boot</groupId>
+				        <artifactId>spring-boot-devtools</artifactId>
+				        <version>${spring.boot.version}</version>
+				        <optional>true</optional>
+				    </dependency>        
+					<dependency>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-mail</artifactId>
+				        <version>${spring.boot.version}</version>
+					</dependency>
+			        
+  			   		<dependency>		
+					    <groupId>org.springframework.data</groupId>
+					    <artifactId>spring-data-jpa</artifactId>
+					    <version>${spring.data.version}</version>
+					</dependency>
+					
+			        <dependency>
+			            <groupId>org.hibernate.javax.persistence</groupId>
+			            <artifactId>hibernate-jpa-2.1-api</artifactId>
+			            <version>${hibernate.jpa.version}</version>
+       				</dependency>
+					
+   			        <dependency>
+			            <groupId>org.hibernate</groupId>
+			            <artifactId>hibernate-entitymanager</artifactId>
+			            <version>${hibernate.version}</version>
+			        </dependency>
+			        
 		            <dependency>
 			            <groupId>org.apache.velocity</groupId>
 			            <artifactId>velocity</artifactId>
@@ -318,6 +391,11 @@
 			            <version>${net.ju-n.commons-dbcp-jmx.version}</version>
 			            <classifier>jar-with-dependencies</classifier>
 		            </dependency>
+                    <dependency>
+			            <groupId>org.projectlombok</groupId>
+			            <artifactId>lombok</artifactId>
+			            <version>1.16.18</version>
+			        </dependency>  
 	            </dependencies>
             </dependencyManagement>
         </profile>
@@ -333,16 +411,16 @@
             <properties>
 	            <!-- Librairies -->
 	            <aperture-core.version>1.5.0</aperture-core.version>
-	            <aspectjrt.version>1.8.10</aspectjrt.version>
+	            <aspectjrt.version>1.8.13</aspectjrt.version>
 	            <commons-beanutils.version>1.9.3</commons-beanutils.version> <!-- -->
 	            <commons-dbcp.version>1.4</commons-dbcp.version>
-	            <commons-io.version>2.5</commons-io.version> <!-- -->
-	            <commons-lang3.version>3.6</commons-lang3.version> <!-- -->
-	            <commons-pool2.version>2.4.2</commons-pool2.version> <!-- -->
-	            <ehcache.version>2.10.4</ehcache.version> <!-- Next release 3.0.0 with new package org.ehcache -->
-	            <httpclient.version>4.5.3</httpclient.version> <!-- -->
+	            <commons-io.version>2.6</commons-io.version> <!-- -->
+	            <commons-lang3.version>3.7</commons-lang3.version> <!-- -->
+	            <commons-pool2.version>2.6.0</commons-pool2.version> <!-- -->
+	            <ehcache.version>2.10.5</ehcache.version> <!-- Next release 3.0.0 with new package org.ehcache -->
+	            <httpclient.version>4.5.6</httpclient.version> <!-- -->
 	            <itext.version>2.1.7</itext.version> <!-- Next release 4.2.0 moved to new package com.itextpdf do not use with jasperreport 6.4.1-->
-	            <jackson.version>2.9.1</jackson.version> <!-- -->
+	            <jackson.version>2.9.6</jackson.version> <!-- -->
 	            <jtds.version>1.3.1</jtds.version>
 	            <junit.version>4.12</junit.version> <!-- -->
 	            <logback.version>1.2.3</logback.version> <!-- -->
@@ -350,13 +428,18 @@
 	            <jasperreports.version>6.4.1</jasperreports.version> <!-- -->
 	            <jsp-api.version>2.2</jsp-api.version>
 	            <poi.version>3.17</poi.version> <!-- -->
-	            <servlet-api.version>4.0.0</servlet-api.version> <!-- 4.0.0-b03 -->
+	            <servlet-api.version>4.0.1</servlet-api.version> <!-- 4.0.0-b03 -->
+  	            <validation-api.version>2.0.1.Final</validation-api.version>
 	            <slf4j.version>1.7.25</slf4j.version> <!-- -->
-	            <spring.version>5.0.0.RELEASE</spring.version> <!-- 5.0.0.M5 -->
-	            <spring.security.version>4.2.3.RELEASE</spring.security.version>
-	            <velocity.version>1.7</velocity.version>
+	            <spring.version>5.0.7.RELEASE</spring.version>
+	            <spring.security.version>5.0.6.RELEASE</spring.security.version>
+	            <spring.boot.version>2.0.3.RELEASE</spring.boot.version>
+	            <spring.data.version>2.0.8.RELEASE</spring.data.version>
+	            <hibernate.jpa.version>1.0.2.Final</hibernate.jpa.version>	            
+	            <hibernate.version>5.3.3.Final</hibernate.version>
 	            <org.mybatis.mybatis.version>3.4.5</org.mybatis.mybatis.version> <!-- -->
 	            <org.mybatis.mybatis-spring.version>1.3.1</org.mybatis.mybatis-spring.version> <!-- -->
+	            <velocity.version>1.7</velocity.version>
 	            <net.ju-n.commons-dbcp-jmx.version>0.2.4</net.ju-n.commons-dbcp-jmx.version>
             </properties>
 
@@ -455,6 +538,11 @@
 			            <version>${servlet-api.version}</version>
 		            </dependency>
 		            <dependency>
+					    <groupId>javax.validation</groupId>
+					    <artifactId>validation-api</artifactId>
+					    <version>${validation-api.version}</version>
+					</dependency>
+		            <dependency>
 			            <groupId>junit</groupId>
 			            <artifactId>junit</artifactId>
 			            <version>${junit.version}</version>
@@ -518,6 +606,64 @@
 			            <artifactId>spring-security-config</artifactId>
 			            <version>${spring.security.version}</version>
 			        </dependency>
+			        
+	                <dependency>
+			            <groupId>org.springframework.boot</groupId>
+			            <artifactId>spring-boot-dependencies</artifactId>
+			            <version>${spring.boot.version}</version>
+			            <type>pom</type>
+			        </dependency>
+			        <dependency>
+				        <groupId>org.springframework.boot</groupId>
+				        <artifactId>spring-boot-starter-web</artifactId>
+				        <version>${spring.boot.version}</version>
+				    </dependency>
+				    <dependency>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-jdbc</artifactId>
+				        <version>${spring.boot.version}</version>
+					</dependency>
+			        <dependency>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-data-jpa</artifactId>
+				        <version>${spring.boot.version}</version>
+				        <exclusions>
+				        	<exclusion>
+				        		<groupId>org.hibernate</groupId>
+				        		<artifactId>hibernate-core</artifactId>
+				        	</exclusion>
+				        </exclusions>
+					</dependency>
+				    <dependency>
+				        <groupId>org.springframework.boot</groupId>
+				        <artifactId>spring-boot-devtools</artifactId>
+				        <version>${spring.boot.version}</version>
+				        <optional>true</optional>
+				    </dependency>        
+					<dependency>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-mail</artifactId>
+				        <version>${spring.boot.version}</version>
+					</dependency>
+					
+			   		<dependency>		
+					    <groupId>org.springframework.data</groupId>
+					    <artifactId>spring-data-jpa</artifactId>
+					    <version>${spring.data.version}</version>
+					</dependency>
+		    
+   			        <dependency>
+			            <groupId>org.hibernate.javax.persistence</groupId>
+			            <artifactId>hibernate-jpa-2.1-api</artifactId>
+			            <version>${hibernate.jpa.version}</version>
+       				</dependency>
+       				
+			        <dependency>
+			            <groupId>org.hibernate</groupId>
+			            <artifactId>hibernate-entitymanager</artifactId>
+			            <version>${hibernate.version}</version>
+			        </dependency>
+			        
 		            <dependency>
 			            <groupId>org.apache.velocity</groupId>
 			            <artifactId>velocity</artifactId>
@@ -534,9 +680,25 @@
 			            <version>${net.ju-n.commons-dbcp-jmx.version}</version>
 			            <classifier>jar-with-dependencies</classifier>
 		            </dependency>
+                    <dependency>
+			            <groupId>org.projectlombok</groupId>
+			            <artifactId>lombok</artifactId>
+			            <version>1.16.18</version>
+			        </dependency>  
 	            </dependencies>
             </dependencyManagement>
         </profile>
+
     </profiles>
+  <build>
+    <plugins>
+ 
+      <plugin>
+       	<groupId>org.apache.maven.plugins</groupId>
+       	<artifactId>maven-project-info-reports-plugin</artifactId>
+      	<version>2.8</version>
+   	  </plugin>
+    </plugins>
+  </build>
 
 </project>

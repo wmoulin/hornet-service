@@ -1,0 +1,213 @@
+<!--
+
+    ﻿Copyright Ministère des Affaires étrangères et du Développement international , 22 avril 2015
+    https://adullact.net/projects/hornet/
+
+
+    Ce logiciel est un programme informatique servant à faciliter la création
+     d'applications Web accessibles conforémement au RGAA et performantes.
+
+    Ce logiciel est régi par la licence CeCILL v2.1 soumise au droit français et
+    respectant les principes de diffusion des logiciels libres. Vous pouvez
+    utiliser, modifier et/ou redistribuer ce programme sous les conditions
+    de la licence CeCILL telle que diffusée par le CEA, le CNRS et l'INRIA
+    sur le site "http://www.cecill.info".
+
+    En contrepartie de l'accessibilité au code source et des droits de copie,
+    de modification et de redistribution accordés par cette licence, il n'est
+    offert aux utilisateurs qu'une garantie limitée.  Pour les mêmes raisons,
+    seule une responsabilité restreinte pèse sur l'auteur du programme,  le
+    titulaire des droits patrimoniaux et les concédants successifs.
+
+    A cet égard  l'attention de l'utilisateur est attirée sur les risques
+    associés au chargement,  à l'utilisation,  à la modification et/ou au
+    développement et à la reproduction du logiciel par l'utilisateur étant
+    donné sa spécificité de logiciel libre, qui peut le rendre complexe à
+    manipuler et qui le réserve donc à des développeurs et des professionnels
+    avertis possédant  des  connaissances  informatiques approfondies.  Les
+    utilisateurs sont donc invités à charger  et  tester  l'adéquation  du
+    logiciel à leurs besoins dans des conditions permettant d'assurer la
+    sécurité de leurs systèmes et ou de leurs données et, plus généralement,
+    à l'utiliser et l'exploiter dans les mêmes conditions de sécurité.
+
+    Le fait que vous puissiez accéder à cet en-tête signifie que vous avez
+    pris connaissance de la licence CeCILL, et que vous en avez accepté les
+    termes.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>fr.gouv.diplomatie.hornet</groupId>
+		<artifactId>hornet-service-parent</artifactId>
+		<version>5.2.0</version>
+		<relativePath>../hornet-service-parent</relativePath>
+	</parent>
+	
+	<!-- Basics -->
+	<groupId>fr.gouv.diplomatie.hornet</groupId>
+	<artifactId>hornet-service-framework-parent</artifactId>
+	
+	<!-- NOTE : penser à mettre la dépendance du BOM à jour : hornet-service-bom -->
+	<version>5.2.0</version>
+	<packaging>pom</packaging>
+
+	<inceptionYear>2015</inceptionYear>
+	<organization>
+		<name>MAE - Ministère des Affaires étrangères</name>
+		<url />
+	</organization>
+
+	<modules>
+		<module>hornet-service-clamav</module>
+		<module>hornet-service-clamavsimulateur</module>
+		<module>hornet-service-core</module>
+		<module>hornet-service-data</module>
+		<module>hornet-service-httpparam</module>
+		<module>hornet-service-metrologiefilter</module>
+		<module>hornet-service-typemime</module>
+		<module>hornet-service-web</module>
+		<module>hornet-service-webservicehelper</module>
+		<module>hornet-pom-orm</module>
+		<module>hornet-pom-reports</module>
+	</modules>
+
+	<!-- Properties -->
+	<properties>
+	
+		<!-- Bom -->
+		<hornet.bom.version>5.2.0</hornet.bom.version>
+	</properties>
+
+	<!-- Dependencies -->
+	<dependencyManagement>
+		<dependencies>
+			<!-- Import du BOM du framework -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>hornet-service-bom</artifactId>
+				<version>${hornet.bom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- Logging -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+		</dependency>
+
+		<!-- Tests -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+		<!-- Génération de la Javadoc -->
+			<!-- # Récupération des resources depuis le module hornet-service-javadoc-resources -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>pre-site</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<!-- Copie des images dans le dossier de la javadoc -->
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>hornet-service-javadoc-resources</artifactId>
+									<version>${project.version}</version>
+									<type>jar</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.javadoc.dir}</outputDirectory>
+									<includes>images/*.*</includes>
+								</artifactItem>
+								<!-- Copie des properties dans le dossier target -->
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>hornet-service-javadoc-resources</artifactId>
+									<version>${project.version}</version>
+									<type>jar</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}</outputDirectory>
+									<includes>javadoc.properties</includes>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- # Lecture du fichier de properties -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>pre-site</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>${project.build.directory}/javadoc.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- # Modification des logos dans la Javadoc -->
+			<plugin>
+				<groupId>com.google.code.maven-replacer-plugin</groupId>
+				<artifactId>replacer</artifactId>
+				<executions>
+					<execution>
+						<phase>site</phase>
+						<goals>
+							<goal>replace</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<ignoreErrors>true</ignoreErrors>
+					<file>${project.javadoc.dir}/overview-frame.html</file>
+					<replacements>
+						<replacement>
+							<token>${javadoc.header.search}</token>
+							<value>${javadoc.header.replace}</value>
+						</replacement>
+					</replacements>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
