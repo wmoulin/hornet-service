@@ -3,7 +3,7 @@
 	
 	<groupId>fr.gouv.diplomatie.hornet</groupId>
 	<artifactId>hornet-service-javadoc-resources</artifactId>
-	<version>5.2.0</version>
+	<version>5.4.0</version>
 	<packaging>jar</packaging>
 
 	<properties>

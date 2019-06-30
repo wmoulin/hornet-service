@@ -4,7 +4,7 @@
 	<!-- Basics -->
 	<groupId>fr.gouv.diplomatie.hornet</groupId>
 	<artifactId>hornet-service</artifactId>
-	<version>5.2.0</version>
+	<version>5.4.0</version>
 	<packaging>pom</packaging>
 
 	<inceptionYear>2016</inceptionYear>
