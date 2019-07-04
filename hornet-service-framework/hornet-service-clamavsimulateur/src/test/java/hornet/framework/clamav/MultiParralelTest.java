@@ -391,10 +391,10 @@ public class MultiParralelTest {
          * @return the int
          * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
          */
-        @Override
         public int compare(final File o1, final File o2) {
 
             return o2.getName().compareTo(o1.getName());
         }
+
     }
 }

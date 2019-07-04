@@ -102,7 +102,11 @@ public class ResultWrapperHttpMessageConverter extends MappingJackson2HttpMessag
     // public class ResultWrapperHttpMessageConverter extends AbstractJackson2HttpMessageConverter {
 
     final static class VoidSerializer extends StdSerializer<Void> {
-        public final static VoidSerializer instance = new VoidSerializer();
+        /**
+		 * serialVersionUID
+		 */
+		private static final long serialVersionUID = 1L;
+		public final static VoidSerializer instance = new VoidSerializer();
 
         private VoidSerializer() {
             super(Void.TYPE);

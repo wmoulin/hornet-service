@@ -60,9 +60,9 @@
 		<!-- "mvn ... -Denvironnement=dev" -->
 		<environnement>integration</environnement>
 
-		<compilerVersion>1.8</compilerVersion>
-		<compileSource>1.8</compileSource>
-		<compileTarget>1.8</compileTarget>
+		<compilerVersion>10</compilerVersion>
+		<compileSource>10</compileSource>
+		<compileTarget>10</compileTarget>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -79,11 +79,11 @@
 		<project.implementation.vendor>MEAE</project.implementation.vendor>
 
 		<!-- Plugins -->
-		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+		<maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
 		<maven-source-plugin.version>3.0.1</maven-source-plugin.version>
 		<maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
-		<maven-surefire-plugin.version>2.20.1</maven-surefire-plugin.version>
-		<maven-surefire-report-plugin.version>2.20.1</maven-surefire-report-plugin.version>
+		<maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
+		<maven-surefire-report-plugin.version>2.22.1</maven-surefire-report-plugin.version>
 		<maven-javadoc-plugin.version>3.0.0</maven-javadoc-plugin.version>
 		<maven-site-plugin.version>3.6</maven-site-plugin.version>
 		<maven-replacer-plugin.version>1.5.3</maven-replacer-plugin.version>
@@ -264,7 +264,7 @@
                               <version>[3.2.5,)</version>
                             </requireMavenVersion>
                             <requireJavaVersion>
-                              <version>1.8</version>
+                              <version>${compilerVersion}</version>
                             </requireJavaVersion>
                           </rules>
                         </configuration>
@@ -354,8 +354,9 @@
 					<verbose>true</verbose>
 					<fork>true</fork>
 					<compilerVersion>${compilerVersion}</compilerVersion>
-					<source>${compileSource}</source>
-					<target>${compileTarget}</target>
+					<release>10</release>
+<!-- 					<source>${compileSource}</source> -->
+<!-- 					<target>${compileTarget}</target> -->
 					<compilerArgument>-proc:none</compilerArgument>
 					<!-- Permet de conserver les noms des parametres des méthodes après 
 						compilation -->

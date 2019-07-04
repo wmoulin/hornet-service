@@ -27,10 +27,10 @@ public class UtilisateurSpecification {
             public Predicate toPredicate(final Root<Utilisateur> root, final CriteriaQuery<?> query,
                         final CriteriaBuilder builder) {
 
-                final List<Predicate> p = new ArrayList<>();
-                p.add(builder.like(root.get("login"), login));
+                final List<Predicate> p = new ArrayList<Predicate>();
+                p.add(builder.like(root.get("login").as(String.class), login));
                 if (password != null) {
-                    p.add(builder.like(root.get("password"), password));
+                    p.add(builder.like(root.get("password").as(String.class), password));
                 }
                 final Predicate[] result = new Predicate[p.size()];
                 return builder.and(p.toArray(result));

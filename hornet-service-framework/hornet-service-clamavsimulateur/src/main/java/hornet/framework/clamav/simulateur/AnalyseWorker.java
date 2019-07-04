@@ -267,7 +267,6 @@ public class AnalyseWorker implements Runnable {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void run() {
 
         synchronized (this) {
